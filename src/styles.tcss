@@ -1,0 +1,29 @@
+.menu-container {
+  dock: left;
+  width: 30;
+  background: $surface;
+}
+
+.content-container {
+  background: $background;
+}
+
+.status-bar {
+  dock: bottom;
+  height: 3;
+  background: $primary;
+}
+
+OptionList {
+  height: auto;
+}
+
+RichLog {
+  height: 1fr;
+  border: solid $primary;
+}
+
+Input {
+  dock: bottom;
+  margin: 1;
+}

@@ -73,7 +73,31 @@ class GitAgentSettings(BaseSettings):
         env_prefix="GITAGENT_",
         env_file=".env",
         case_sensitive=False,
-        env_file_encoding="utf-8"
+        env_file_encoding="utf-8",
+        # extra="ignore",
+    )
+    # LangSmith Configuration
+    langsmith_project: Optional[str] = Field(
+        default=None, 
+        description="LangSmith project name for tracing",
+        alias="LANGSMITH_PROJECT"
+    )
+    langsmith_api_key: Optional[str] = Field(
+        default=None, 
+        description="LangSmith API key for tracing",
+        alias="LANGSMITH_API_KEY"
+    )
+    langsmith_tracing: bool = Field(
+        default=False, 
+        description="Enable LangSmith tracing",
+        alias="LANGSMITH_TRACING"
+    )
+    
+    # Tavily Configuration
+    tavily_api_key: Optional[str] = Field(
+        default=None, 
+        description="Tavily API key for search capabilities",
+        alias="TAVILY_API_KEY"
     )
 
     def model_post_init(self, __context) -> None:

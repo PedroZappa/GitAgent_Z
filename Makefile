@@ -13,6 +13,7 @@ NAME = langgraph_agent
 MAIN = $(SRC)/main.py
 SRC = src
 ARGS = 
+APP = $(MAIN)
 VENV = .venv
 MAIN_TEST := tests/unit_tests/
 EXEC = ./scripts/run.sh && python3 $(MAIN)
@@ -46,7 +47,7 @@ MKDIR_P	= mkdir -p
 ##@ Project Scaffolding 󰛵
 
 # Default target executed when no arguments are given to make.
-all: help
+all:
 	$(MAKE) run
 
 run:			## Run project
@@ -86,7 +87,7 @@ lint_package: PYTHON_FILES=$(SRC)
 lint_tests: PYTHON_FILES=tests
 lint_tests: MYPY_CACHE=.mypy_cache_test
 
-lint lint_diff lint_package lint_tests:
+lint lint_diff lint_package lint_tests: 
 	python -m ruff check .
 	[ "$(PYTHON_FILES)" = "" ] || python -m ruff format $(PYTHON_FILES) --diff
 	[ "$(PYTHON_FILES)" = "" ] || python -m ruff check --select I $(PYTHON_FILES)
@@ -94,10 +95,10 @@ lint lint_diff lint_package lint_tests:
 	[ "$(PYTHON_FILES)" = "" ] || mkdir -p $(MYPY_CACHE) && python -m mypy --strict $(PYTHON_FILES) --cache-dir $(MYPY_CACHE)
 
 
-spell_check:
+spell_check: ## Run codespell check
 	codespell --toml pyproject.toml
 
-spell_fix:
+spell_fix:	## Run codespell fix
 	codespell --toml pyproject.toml -w
 
 ##@ Documentation Rules 
@@ -171,6 +172,18 @@ mypy:			## Run mypy static checker
 
 posting:	## Run posting API testing client
 	posting --collection $(NAME)_posting --env .env
+
+serve: build  # Serve Textual project as a web app
+	@echo "* $(YEL)Preparing to serve $(MAG)$(NAME)$(D):"
+	textual serve $(APP)
+
+console: build  # Serve Textual project as a console app
+	@echo "* $(YEL)Preparing execute w/ console $(MAG)$(NAME)$(D):"
+
+	tmux split-window -v "source .venv/bin/activate && textual console" 
+	tmux resize-pane -U 30
+	# tmux split-window -v "source .venv/bin/activate && textual run --dev $(APP)"
+	source .venv/bin/activate && textual run --dev $(APP)
 
 ##@ Clean-up Rules 󰃢
 
