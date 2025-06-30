@@ -194,5 +194,11 @@ def main():
     app = GitAgentApp()
     app.run()
 
+def main():
+    print(settings)
+
+    return 0
+
+
 if __name__ == "__main__":
     main()
