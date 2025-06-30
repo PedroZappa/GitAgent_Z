@@ -46,11 +46,7 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.cover
-<<<<<<< HEAD
-*.py.cover
-=======
 *.py,cover
->>>>>>> 3b81e0c (feat: Initial project setup with LangGraph agent, tests, and)
 .hypothesis/
 .pytest_cache/
 cover/

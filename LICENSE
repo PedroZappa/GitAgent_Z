@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 This is free and unencumbered software released into the public domain.
 
 Anyone is free to copy, modify, publish, use, compile, sell, or
@@ -24,6 +25,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <https://unlicense.org>
 =======
+=======
+>>>>>>> 3b81e0c (feat: Initial project setup with LangGraph agent, tests, and)
 MIT License
 
 Copyright (c) 2024 LangChain
@@ -45,4 +48,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+<<<<<<< HEAD
+>>>>>>> 3b81e0c (feat: Initial project setup with LangGraph agent, tests, and)
+=======
 >>>>>>> 3b81e0c (feat: Initial project setup with LangGraph agent, tests, and)

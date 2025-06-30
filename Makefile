@@ -111,6 +111,9 @@ docs: 		## Open docs index in browser
 
 ##@ Test/Debug Rules 
 
+# Define a variable for the test file path.
+TEST_FILE ?= tests/unit_tests/
+
 test:## Run all tests
 	@echo "* $(MAG)$(NAME) $(YEL)starting test suite$(D):"
 	@echo ""
