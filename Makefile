@@ -72,6 +72,7 @@ add-if-exists = $(if $(wildcard $(1)/.),$(1))
 EXCLUDE_DIRS = $(VENV) \
                $(call add-if-exists,__*) \
                $(call add-if-exists,.*_cache) \
+               $(call add-if-exists,*-info) \
 
 black: ## Run black formatter
 	black . --exclude=$(EXCLUDE_DIRS)

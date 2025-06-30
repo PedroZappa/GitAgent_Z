@@ -9,19 +9,24 @@ readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.9"
 dependencies = [
-    "langgraph>=0.2.6",
     "python-dotenv>=1.0.1",
-    "rich >=13.5.2",
+    "pydantic",
+    "pydantic-settings",
+    "rich",
+    "textual",
+    "textual-dev",
+    "textual[syntax]",
     "langchain",
     "langchain[ollama]",
     "langchain-tavily",
-    "langgraph",
+    "langgraph>=0.2.6",
     "langsmith",
 ]
 
 
 [project.optional-dependencies]
 dev = [
+    "black>=23.9.1",
 ]
 
 [build-system]
@@ -41,29 +46,10 @@ packages = ["langgraph.templates.agent", "agent"]
 [tool.setuptools.package-data]
 "*" = ["py.typed"]
 
-[tool.ruff]
-lint.select = [
-    "E",    # pycodestyle
-    "F",    # pyflakes
-    "I",    # isort
-    "D",    # pydocstyle
-    "D401", # First line should be in imperative mood
-    "T201",
-    "UP",
-]
-lint.ignore = [
-    "UP006",
-    "UP007",
-    # We actually do want to import from typing_extensions
-    "UP035",
-    # Relax the convention by _not_ requiring documentation for every function parameter.
-    "D417",
-    "E501",
-]
-[tool.ruff.lint.per-file-ignores]
-"tests/*" = ["D", "UP"]
-[tool.ruff.lint.pydocstyle]
-convention = "google"
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
 
 [dependency-groups]
 dev = [
@@ -71,5 +57,4 @@ dev = [
     "langgraph-cli[inmem]>=0.2.8",
     "mypy>=1.13.0",
     "pytest>=8.3.5",
-    "black>=23.9.1",
 ]
