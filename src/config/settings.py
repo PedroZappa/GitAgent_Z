@@ -73,7 +73,6 @@ class GitAgentSettings(BaseSettings):
         env_prefix="GITAGENT_",
         env_file=".env",
         case_sensitive=False,
-<<<<<<< HEAD
         env_file_encoding="utf-8",
         # extra="ignore",
     )
@@ -99,9 +98,7 @@ class GitAgentSettings(BaseSettings):
         default=None, 
         description="Tavily API key for search capabilities",
         alias="TAVILY_API_KEY"
-=======
         env_file_encoding="utf-8"
->>>>>>> 2ed7a07 (chore: update dependencies, add config/logging infrastructure, configure black formatting)
     )
 
     def model_post_init(self, __context) -> None:
