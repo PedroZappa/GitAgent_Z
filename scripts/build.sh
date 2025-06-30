@@ -9,7 +9,7 @@ if [ ! -d .venv ]; then
     # Upgrade pip to the latest version
     pip install --upgrade pip
     # Install the package in editable mode with development dependencies
-    pip install -r requirements.txt
+    pip install -e .[dev]
     # Print a message indicating that the virtual environment has been created
     echo ".venv created"
     # List the installed packages in the virtual environment

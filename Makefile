@@ -9,12 +9,12 @@ SHELL	:= bash --rcfile ~/.bashrc
 #                                     NAMES                                    #
 #==============================================================================#
 
-NAME = $(shell basename $(CURDIR))
-MAIN = main.py
-SRC = .
+NAME = langgraph_agent
+MAIN = $(SRC)/main.py
+SRC = src
 ARGS = 
 VENV = .venv
-MAIN_TEST = test_$(MAIN)
+MAIN_TEST := tests/unit_tests/
 EXEC = ./scripts/run.sh && python3 $(MAIN)
 
 ### Message Vars
@@ -45,7 +45,8 @@ MKDIR_P	= mkdir -p
 
 ##@ Project Scaffolding 󰛵
 
-all:			## Build and run project
+# Default target executed when no arguments are given to make.
+all: help
 	$(MAKE) run
 
 run:			## Run project
@@ -74,6 +75,31 @@ EXCLUDE_DIRS = $(VENV) \
 
 black: ## Run black formatter
 	black . --exclude=$(EXCLUDE_DIRS)
+
+# Define a variable for Python and notebook files.
+PYTHON_FILES=$(SRC)/
+MYPY_CACHE=.mypy_cache
+lint format: PYTHON_FILES=.
+lint_diff format_diff: PYTHON_FILES=$(shell git diff --name-only --diff-filter=d main | grep -E '\.py$$|\.ipynb$$')
+lint_package: PYTHON_FILES=$(SRC)
+lint_tests: PYTHON_FILES=tests
+lint_tests: MYPY_CACHE=.mypy_cache_test
+
+lint lint_diff lint_package lint_tests:
+	python -m ruff check .
+	[ "$(PYTHON_FILES)" = "" ] || python -m ruff format $(PYTHON_FILES) --diff
+	[ "$(PYTHON_FILES)" = "" ] || python -m ruff check --select I $(PYTHON_FILES)
+	[ "$(PYTHON_FILES)" = "" ] || python -m mypy --strict $(PYTHON_FILES)
+	[ "$(PYTHON_FILES)" = "" ] || mkdir -p $(MYPY_CACHE) && python -m mypy --strict $(PYTHON_FILES) --cache-dir $(MYPY_CACHE)
+
+
+spell_check:
+	codespell --toml pyproject.toml
+
+spell_fix:
+	codespell --toml pyproject.toml -w
+
+##@ Documentation Rules 
 
 sphinx:		## Generate .rst files
 	sphinx-apidoc -o docs/source $(SRC)
@@ -129,6 +155,7 @@ doctest: sphinx		## Run sphinx doctests
 pytest:		## run pytest
 	@echo "* $(MAG)$(NAME) $(YEL)running pytest$(D):"
 	pytest $(MAIN_TEST)
+	python -m pytest $(TEST_FILE)
 	@echo "* $(MAG)$(NAME) pytest suite $(YEL)finished$(D):"
 
 MYPY_FLAGS := --install-types --ignore-missing-imports
@@ -159,6 +186,25 @@ clean: ## Remove object files
 	done
 	@echo "$(_SUCCESS) Clean completed!"
 
+
+integration_tests:
+	python -m pytest tests/integration_tests 
+
+test_watch:		## run unit tests in watch mode'
+	python -m ptw --snapshot-update --now . -- -vv tests/unit_tests
+
+test_profile:
+	python -m pytest -vv tests/unit_tests/ --profile-svg
+
+extended_tests:
+	python -m pytest --only-extended $(TEST_FILE)
+
+
+######################
+# HELP
+######################
+
+
 ##@ Help 󰛵
 
 help: 	## Display this help page
@@ -171,7 +217,7 @@ help: 	## Display this help page
 ## Tweaked from source:
 ### https://www.padok.fr/en/blog/beautiful-makefile-awk
 
-.PHONY: test mypy black posting clean help docs
+.PHONY: all format lint test tests test_watch integration_tests docker_tests help extended_tests
 
 #==============================================================================#
 #                                  UTILS                                       #
@@ -202,10 +248,4 @@ BWHI	= $(shell tput setaf 15)
 D 		= $(shell tput sgr0)
 BEL 	= $(shell tput bel)
 CLR 	= $(shell tput el 1)
-
-
-
-
-
-
 
