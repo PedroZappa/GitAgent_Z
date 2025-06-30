@@ -1,0 +1,15 @@
+# dev
+mypy
+pytest
+pytest-env
+black
+# util
+rich
+# langchain
+# transformers
+langchain
+langgraph
+langsmith
+langchain[ollama]
+langchain-tavily
+
