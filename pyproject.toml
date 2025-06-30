@@ -20,6 +20,7 @@ dependencies = [
     "langchain[ollama]",
     "langchain-tavily",
     "langgraph>=0.2.6",
+    "langgraph-cli[inmem]>=0.2.8",
     "langsmith",
 ]
 
@@ -55,7 +56,6 @@ include = '\.pyi?$'
 [dependency-groups]
 dev = [
     "anyio>=4.7.0",
-    "langgraph-cli[inmem]>=0.2.8",
     "mypy>=1.13.0",
     "pytest>=8.3.5",
 ]

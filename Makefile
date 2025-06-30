@@ -51,9 +51,7 @@ all:
 	$(MAKE) run
 
 run:			## Run project
-	@if [ ! -d "$(VENV)" ]; then \
-		$(MAKE) build; \
-	fi
+	$(MAKE) build
 	@echo "* $(MAG)$(NAME) $(YEL)executing$(D): $(_SUCCESS)"
 	@echo "$(GRN)$(_SEP)$(D)"
 	@source $(EXEC) $(ARGS)
